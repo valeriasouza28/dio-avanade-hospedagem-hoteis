@@ -9,14 +9,14 @@ namespace DesafioProjetoHospedagem.Models.Reservas
         public Suite Suite { get; set; } = new Suite();
         public int DiasReservados { get; set; }
         public StatusReserva Status { get; set; } = StatusReserva.Pendente;
-        public Pessoa Hospede { get; set; }
-        public ListaReservas ListaReservas { get; set; } = new ListaReservas();
-        Reserva reserva;
+        public Pessoa Hospede { get; set; } = new Pessoa();
+
+
 
         public Reserva() { }
 
         // Método para criar uma reserva
-        public Reserva(Pessoa hospede, int diasReservados, Suite suite, ListaReservas listaReservas)
+        public Reserva(Pessoa hospede, int diasReservados, Suite suite)
         {
             if (hospede == null)
             {
@@ -33,16 +33,12 @@ namespace DesafioProjetoHospedagem.Models.Reservas
                 throw new ArgumentNullException(nameof(suite), "A suíte não pode ser nula.");
             }
 
-            if (listaReservas == null)
-            {
-                throw new ArgumentNullException(nameof(listaReservas), "A lista de reservas não pode ser nula.");
-            }
-
             Hospede = hospede;
             DiasReservados = diasReservados;
             Suite = suite;
             Status = StatusReserva.Pendente;
-            ListaReservas = listaReservas;
+            // ListaReservas.AdicionaListaReservas(this);
+
         }
 
         // Método para verificar se a reserva pode ser confirmada
@@ -62,15 +58,14 @@ namespace DesafioProjetoHospedagem.Models.Reservas
         }
 
         // Método para confirmar a reserva
-        public void ConfirmarReserva()
+        public void ConfirmarReserva(Reserva reserva)
         {
             if (PodeConfirmarReserva())
             {
                 Status = StatusReserva.Confirmada;
                 Suite.MarcarComoOcupada();
                 decimal valorTotal = CalcularValorTotal();
-                ListaReservas.AdicionaListaReservas(this);
-                Console.WriteLine($"Reserva confirmada! Valor total: {valorTotal:C}");
+                Console.WriteLine($"=====\nReserva confirmada! Valor total: {valorTotal:C}\n===== ");
             }
             else
             {
@@ -81,10 +76,13 @@ namespace DesafioProjetoHospedagem.Models.Reservas
         // Método para cancelar a reserva
         public void CancelarReserva()
         {
+            Reserva reserva = new Reserva();
+
             Status = StatusReserva.Cancelada;
             Suite.MarcarComoDisponivel();
-            ListaReservas.RemoveListaReservas(this);
         }
+
+
 
         // Método para calcular o valor total da reserva
         private decimal CalcularValorTotal()
@@ -104,7 +102,8 @@ namespace DesafioProjetoHospedagem.Models.Reservas
 
         public void ObterDados()
         {
-            Console.WriteLine($"Dias Reservados: {DiasReservados}, Status da Reserva: {Status}");
+            decimal ValorTotal = CalcularValorTotal();
+            Console.WriteLine($"Dias Reservados: {DiasReservados}, Status da Reserva: {Status}, Valor Total: {ValorTotal}");
         }
 
         public void ObterDadosCompletos()
@@ -112,6 +111,8 @@ namespace DesafioProjetoHospedagem.Models.Reservas
             Hospede.ObterDados();
             Suite.ToString();
             ObterDados();
+
         }
     }
 }
+

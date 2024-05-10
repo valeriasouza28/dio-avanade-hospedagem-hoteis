@@ -1,5 +1,6 @@
 public class Hotel
 {
+
   private const int CapacidadeMaximaSuites = 100; // Defina a capacidade máxima de suítes conforme necessário
 
   private string _nome;
@@ -24,6 +25,7 @@ public class Hotel
     }
   }
 
+  public Hotel() { }
   public Hotel(string nome, int qtdSuites)
   {
     Nome = nome;

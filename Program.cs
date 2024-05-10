@@ -1,43 +1,51 @@
-﻿using System.ComponentModel;
+﻿using System.Reflection.Metadata;
+using System.Diagnostics;
+using System.ComponentModel;
 using System.Text;
 using DesafioProjetoHospedagem.Models;
 using DesafioProjetoHospedagem.Models.Reservas;
 using DesafioProjetoHospedagem.Models.Suites;
+using System.Reflection;
 
+static void AdicionaListaReservas(List<Reserva> Reservas, Reserva reserva)
+{
+  Reservas.Add(reserva);
+}
+
+static void RemoveListaReservas(List<Reserva> Reservas, Reserva reserva)
+{
+  Reservas.Remove(reserva);
+}
+
+static void ExibirListaDeReservas(List<Reserva> Reservas)
+{
+  Console.WriteLine($"===== Listando Resrvas =====");
+  foreach (var r in Reservas)
+  {
+    r.ObterDadosCompletos();
+  }
+  Console.WriteLine(" ===== ===== ===== ===== ");
+
+}
 
 Console.OutputEncoding = Encoding.UTF8;
+Hotel hotel = new Hotel("Coders Dotnet", 4);
+List<Reserva> Reservas = new List<Reserva>();
 
-ListaReservas listaReservas = new ListaReservas();
+Pessoa pessoa1 = new Pessoa("Maria", "souza", 1);
+Suite suite = new Suite("premium", 2, 50, 1);
+Reserva res1 = new Reserva(pessoa1, 5, suite);
+Pessoa pessoa2 = new Pessoa("Valéria", "souza", 1);
+Suite suite2 = new Suite("luxo", 2, 50, 1);
+Reserva res2 = new Reserva(pessoa2, 5, suite2);
 
-//cria hotel
-Hotel hotel = new Hotel("Coders Dotnet", 100);
+res1.ConfirmarReserva(res1);
+AdicionaListaReservas(Reservas, res1);
 
-//criamos as suites 
+res2.ConfirmarReserva(res2);
+AdicionaListaReservas(Reservas, res2);
+ExibirListaDeReservas(Reservas);
 
-Suite suite1 = new Suite(tipoSuite: "Premium", capacidade: 2, valorDiaria: 50, numeroSuite: 1);
-Suite suite2 = new Suite(tipoSuite: "Luxo", capacidade: 2, valorDiaria: 80, numeroSuite: 2);
-Suite suite3 = new Suite(tipoSuite: "Comum", capacidade: 2, valorDiaria: 30, numeroSuite: 3);
-
-//cadastramos as suites 
-suite1.CadastrarSuite();
-suite2.CadastrarSuite();
-suite3.CadastrarSuite();
-
-//criamos um possível hospede
-Pessoa hospede1 = new Pessoa("Valéria", "Souza", 1);
-Pessoa hospede2 = new Pessoa("Sr", "S", 1);
-
-
-Reserva reservaHospede1 = new Reserva(hospede1, 5, suite1, listaReservas);
-Reserva reservaHospede2 = new Reserva(hospede2, 5, suite2, listaReservas);
-
-reservaHospede1.ConfirmarReserva();
-reservaHospede2.ConfirmarReserva();
-
-listaReservas.AdicionaListaReservas(reservaHospede1);
-listaReservas.AdicionaListaReservas(reservaHospede2);
-
-listaReservas.ExibirListaDeReservas();
-
-reservaHospede1.CancelarReserva();
+RemoveListaReservas(Reservas, res1);
+ExibirListaDeReservas(Reservas);
 

@@ -10,20 +10,20 @@ C#
 .NET Core
 Como utilizar
 Clone este repositório:
-bash
-Copy code
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+```bash
+
+git clone https://github.com/valeriasouza28/dio-avanade-hospedagem-hoteis.git
+```
 Navegue até o diretório do projeto:
-bash
-Copy code
+```bash
 cd nome-do-repositorio
+```
 Compile e execute o projeto:
-bash
-Copy code
+```bash
 dotnet run
+```
 Exemplo de uso
-csharp
-Copy code
+```csharp
 using System;
 using System.Collections.Generic;
 using DesafioProjetoHospedagem.Models.Reservas;
@@ -55,6 +55,7 @@ class Program
         Console.WriteLine($"Valor diária: {reserva.CalcularValorDiaria()}");
     }
 }
+```
 Estrutura do projeto
 O projeto está organizado da seguinte forma:
 

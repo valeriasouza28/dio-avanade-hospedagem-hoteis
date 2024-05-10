@@ -1,21 +1,62 @@
-# DIO - Trilha .NET - Explorando a linguagem C#
-www.dio.me
+Desafio de Projeto de Hospedagem
+Este projeto consiste em um sistema de reserva de hospedagem, onde é possível cadastrar hóspedes, suítes e realizar reservas.
 
-## Desafio de projeto
-Para este desafio, você precisará usar seus conhecimentos adquiridos no módulo de explorando a linguagem C#, da trilha .NET da DIO.
+Funcionalidades
+Cadastrar hóspedes
+Cadastrar suítes
+Realizar reserva de suíte para hóspedes
+Tecnologias utilizadas
+C#
+.NET Core
+Como utilizar
+Clone este repositório:
+bash
+Copy code
+git clone https://github.com/seu-usuario/nome-do-repositorio.git
+Navegue até o diretório do projeto:
+bash
+Copy code
+cd nome-do-repositorio
+Compile e execute o projeto:
+bash
+Copy code
+dotnet run
+Exemplo de uso
+csharp
+Copy code
+using System;
+using System.Collections.Generic;
+using DesafioProjetoHospedagem.Models.Reservas;
+using DesafioProjetoHospedagem.Models.Suites;
 
-## Contexto
-Você foi contratado para construir um sistema de hospedagem, que será usado para realizar uma reserva em um hotel. Você precisará usar a classe Pessoa, que representa o hóspede, a classe Suíte, e a classe Reserva, que fará um relacionamento entre ambos.
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Cria os modelos de hóspedes e cadastra na lista de hóspedes
+        List<Pessoa> hospedes = new List<Pessoa>();
 
-O seu programa deverá cálcular corretamente os valores dos métodos da classe Reserva, que precisará trazer a quantidade de hóspedes e o valor da diária, concedendo um desconto de 10% para caso a reserva seja para um período maior que 10 dias.
+        Pessoa p1 = new Pessoa(nome: "Hóspede 1");
+        Pessoa p2 = new Pessoa(nome: "Hóspede 2");
 
-## Regras e validações
-1. Não deve ser possível realizar uma reserva de uma suíte com capacidade menor do que a quantidade de hóspedes. Exemplo: Se é uma suíte capaz de hospedar 2 pessoas, então ao passar 3 hóspedes deverá retornar uma exception.
-2. O método ObterQuantidadeHospedes da classe Reserva deverá retornar a quantidade total de hóspedes, enquanto que o método CalcularValorDiaria deverá retornar o valor da diária (Dias reservados x valor da diária).
-3. Caso seja feita uma reserva igual ou maior que 10 dias, deverá ser concedido um desconto de 10% no valor da diária.
+        hospedes.Add(p1);
+        hospedes.Add(p2);
 
+        // Cria a suíte
+        Suite suite = new Suite(tipoSuite: "Premium", capacidade: 2, valorDiaria: 30);
 
-![Diagrama de classe estacionamento](diagrama_classe_hotel.png)
+        // Cria uma nova reserva, passando a suíte e os hóspedes
+        Reserva reserva = new Reserva(diasReservados: 5);
+        reserva.CadastrarSuite(suite);
+        reserva.CadastrarHospedes(hospedes);
 
-## Solução
-O código está pela metade, e você deverá dar continuidade obedecendo as regras descritas acima, para que no final, tenhamos um programa funcional. Procure pela palavra comentada "TODO" no código, em seguida, implemente conforme as regras acima.
+        // Exibe a quantidade de hóspedes e o valor da diária
+        Console.WriteLine($"Hóspedes: {reserva.ObterQuantidadeHospedes()}");
+        Console.WriteLine($"Valor diária: {reserva.CalcularValorDiaria()}");
+    }
+}
+Estrutura do projeto
+O projeto está organizado da seguinte forma:
+
+DesafioProjetoHospedagem.Models: Contém as classes modelo do sistema.
+Program.cs: Arquivo principal que contém o código de exemplo de utilização do sistema.
